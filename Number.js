@@ -33,6 +33,7 @@ console.log((2.7).toFixed(0)); // '3'
 console.log((2.7).toFixed(3)); // '2.700'
 console.log(+(2.345).toFixed(2)); // 2.35
 
+// number => [-(2^53 - 1), 2^53 - 1]
 // BigInt
 console.log(Number.MAX_SAFE_INTEGER); // 9007199254740991
 console.log(915449648956986528495698568965); // number: 9.154496489569866e+29

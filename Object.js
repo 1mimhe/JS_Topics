@@ -1,24 +1,3 @@
-
-// Make instance of an object
-// 1. Factory Function
-function createCircle(radios) {
-    return {
-        radios,
-        draw() {
-            console.log('draw');
-        }
-    };
-}
-// 2. Constructor Function(same as Constructor())
-function Circle(radius) {
-    this.radius = radius;
-    this.draw = function () {
-        console.log("draw");
-    }
-}
-const circle = createCircle(1);
-const circle2 = new Circle(2);
-
 // Properties
 const obj = {
   str: "string",
@@ -31,8 +10,11 @@ const obj = {
 obj.str = "p";
 obj["str"] = "p";
 
-delete obj.str;
+delete obj.str; // 'str' property deleted
+
+// in operator
 console.log("a" in obj); // false
+console.log("fnc" in obj); // true
 
 // Getter and Setter
 const myObj = {
@@ -65,3 +47,49 @@ Car.prototype.color = "red";
 
 console.log(car1.color); // log 'red'
 console.log(car2.color); // log 'red'
+
+// Make Instance of A Object:
+// 1. Factory Function
+function createCircle(radios) {
+    return {
+        radios,
+        draw() {
+            console.log('draw');
+        }
+    }
+}
+const circle1 = createCircle(1);
+
+// 2. Constructor Function
+function Circle(radios) {
+    this.radios = radios;
+    this.draw = function () {
+        console.log('draw');
+    }
+}
+const circle2 = new Circle(2);
+
+// Read-only property:
+const obj2 = {};
+Object.defineProperty(obj2, "PI", {value: 3.14, writable: false});
+obj2.PI = 5; // Error in strict mode
+console.log(obj2.PI); // 3.14
+
+// Cloning an object:
+// 1
+const another = Object.assign({color: 'red'}, circle1);
+
+// 2
+const another2 = {...circle1};
+
+// if we want iteration over objects, we can use these:
+console.log(Object.entries(obj)); // [ [ 'space key', 'mio' ], [ 'fnc', [Function: fnc] ] ]
+console.log(Object.keys(obj)); // [ 'space key', 'fnc' ]
+console.log(Object.values(obj)); // [ 'mio', [Function: fnc] ]
+
+// we can name a property with a variable.
+const weekdays = ['sat', 'sun', 'mon', 'tue', 'wed', 'thu', 'fri'];
+const open = {
+    [weekdays[4]]: {},
+    [`day_${2+4}`]: {}
+}; // { wed: {}, day_6: {} }
