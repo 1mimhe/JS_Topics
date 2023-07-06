@@ -62,18 +62,31 @@ const circle1 = createCircle(1);
 
 // 2. Constructor Function
 function Circle(radios) {
+    let a = 5; // private property
+    let b = function (a) { // private method
+        //...
+    }
+
     this.radios = radios;
     this.draw = function () {
+        b(a);
         console.log('draw');
     }
 }
 const circle2 = new Circle(2);
 
-// Read-only property:
+// Define property with Object.defineProperty():
 const obj2 = {};
-Object.defineProperty(obj2, "PI", {value: 3.14, writable: false});
+Object.defineProperty(obj2, "PI", {
+    value: 3.14, // value of property
+    writable: false, // becomes non-writable
+    configurable: false, // cannot be deleted
+    enumerable: false // will not exist in Object.keys
+});
 obj2.PI = 5; // Error in strict mode
+delete obj2.PI; // Error in strict mode
 console.log(obj2.PI); // 3.14
+console.log(Object.keys(obj2)); // []
 
 // Cloning an object:
 // 1
