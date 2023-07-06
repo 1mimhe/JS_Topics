@@ -93,3 +93,6 @@ const open = {
     [weekdays[4]]: {},
     [`day_${2+4}`]: {}
 }; // { wed: {}, day_6: {} }
+
+// Destructuring Assigment
+const {a, b} = {x: 1, y: 2}; // a: 1, b: 2

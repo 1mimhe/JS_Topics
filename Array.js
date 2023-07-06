@@ -49,3 +49,16 @@ const map2 = array2.map(Math.sqrt); // [ 1, 2, 3, 4, 5 ]
 const sum = array2.reduce((accumulator, currentValue) => {
     return accumulator + currentValue;
 }, 0); // 0: initialize accumulator
+
+// Emptying an array
+array1 = [];
+array2.length = 0; // array.length = number
+
+// Destructuring Assigment (With Rest Operator)
+let [a, ...b] = [1 , 5, 6]; // a: 1,  b: [ 5, 6 ]
+
+// Array can have property.
+const arr = [1 , 2, 3];
+arr.property = 'mio';
+arr[2.5] = 4; // also we can have float index, but that will be a property, not a member!
+console.log(arr); // [ 1, 2, 3, property: 'mio', '2.5': 4 ]
