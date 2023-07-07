@@ -22,7 +22,8 @@ function Circle(radius, color) {
 
 extend(Circle, Shape);
 
-// Method Overriding: prototype chain => pick first implementation when we call duplicate()
+// Method Overriding
+// prototype chain => pick first implementation when we call duplicate()
 Circle.prototype.duplicate = function () {
     console.log('duplicate Circle');
 };
