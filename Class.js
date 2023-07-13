@@ -42,6 +42,7 @@ class Circle extends Shape {
     }
 }
 
+// in class inheritance:
 // parent class all properties => child class own properties.
 // parent class own methods => child class own methods.
 console.log((new Circle(5, 'red', 3)));

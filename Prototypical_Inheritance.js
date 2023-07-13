@@ -15,6 +15,10 @@ Shape.prototype.duplicate = function () {
     console.log('duplicate ' + this.color);
 }
 
+// Shape.prototype, is not prototype of Shape.
+// It is the prototype of all the objects we create with Shape constructor function.
+console.log((new Shape('red').__proto__ === Shape.prototype)); // true
+
 function Circle(radius, color) {
     Shape.call(this, color); // Calling Super Constructor
     this.radius = radius;
