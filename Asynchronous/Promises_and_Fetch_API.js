@@ -1,4 +1,5 @@
 const countriesContainer = document.querySelector('.countries');
+
 function renderCountry(data, className = '') {
     const html = `<article class="country ${className}">
     <img class="country__img" src="${data.flags.png}" />
@@ -42,40 +43,96 @@ const getCountryData = function (country) {
 // type of response object => Response
 // getCountryData('usa');
 
-// Chaining Promises + Error Handling
-const getCountryAndNeighbour = function (country) {
-  // Country 1
-  fetch(`https://restcountries.com/v3.1/name/${country}`)
-    .then(response => {
-      console.log(response);
+const getJSON = function (url, errorMsg = 'Something went wrong') {
+    return fetch(url).then(response => {
+        if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
 
-      if (!response.ok) // 404 error handling
-        throw new Error(`Country not found (${response.status})`);
-
-      return response.json();
-    })
-    .then(data => {
-      renderCountry(data[0]);
-      const neighbour = data[0].borders[0];
-
-      if (!neighbour) return;
-
-      // Country 2
-      return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`);
-    }) // we must return the Promise, because we don't want call then() in another then() => no callback hell
-    .then(response => {
-      if (!response.ok) // 404 error handling
-        throw new Error(`Country not found (${response.status})`);
-
-      return response.json();
-    })
-    .then(data => renderCountry(data[0], 'neighbour'))
-    .catch(err => { // for all errors and chaining levels (or we can use 2nd argument of then() for error handling)
-      console.error(`${err} 💥💥💥`);
-      alert(`${err} 💥💥💥`);
-    })
-    .finally(() => {
-      countriesContainer.style.opacity = 1;
+        return response.json();
     });
 };
+
+// Chaining Promises + Error Handling
+const getCountryAndNeighbour = function (country) {
+    // Country 1
+    fetch(`https://restcountries.com/v3.1/name/${country}`)
+        .then(response => {
+            console.log(response);
+
+            if (!response.ok) // 404 error handling
+                throw new Error(`Country not found (${response.status})`);
+
+            return response.json();
+        })
+        .then(data => {
+            renderCountry(data[0]);
+            const neighbour = data[0].borders[0];
+
+            if (!neighbour) return;
+
+            // Country 2
+            return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`);
+        }) // we must return the Promise, because we don't want call then() in another then() => no callback hell
+        .then(response => {
+            if (!response.ok) // 404 error handling
+                throw new Error(`Country not found (${response.status})`);
+
+            return response.json();
+        })
+        .then(data => renderCountry(data[0], 'neighbour'))
+        .catch(err => { // for all errors and chaining levels (or we can use 2nd argument of then() for error handling)
+            console.error(`${err} 💥💥💥`);
+            alert(`${err} 💥💥💥`);
+        })
+        .finally(() => {
+            countriesContainer.style.opacity = 1;
+        });
+};
 getCountryAndNeighbour('canada');
+
+// Build Promise
+const lotteryPromise =
+                            new Promise(function (resolve, reject) { //this function called => executor
+    if (Math.random() >= 0.5)
+        resolve('You WIN'); // argument => result of fulfilled state => then handler
+    else
+        reject('You LOSE'); // argument => result of rejected state => error message => catch handler
+});
+
+// Consume Promises with Async_Await (ES6)
+// async function => this function will be running in background.
+// await => return value of the Promise
+
+const getInfCountry = async function (country) {
+    try {
+        const res = await fetch(`https://restcountries.com/v3.1/name/${country}`); // returns a Response
+        if (!res.ok) throw new Error('Problem getting country data');
+
+        const data = await res.json(); // the data we want
+        return data[0];
+    } catch (e) {
+        console.error(e.message);
+
+        throw e; // rethrow error
+    }
+}
+getInfCountry('usa').then(data => console.log(data))
+    .catch(e => console.log(e.message))
+    .finally(() => console.log('3'));
+// async/await implicitly returns a promise. (fulfilled as default)
+// if there's no return => Promise { undefined } is returned.
+
+// Running Promises in Parallel => Promise.all([array of promises])
+const get3Countries = async function (c1, c2, c3) {
+    try {
+        const data = await Promise.all([
+            getJSON(`https://restcountries.com/v3.1/name/${c1}`),
+            getJSON(`https://restcountries.com/v3.1/name/${c2}`),
+            getJSON(`https://restcountries.com/v3.1/name/${c3}`),
+        ]);
+        return data.map(d => d[0].capital[0]);
+    } catch (err) {
+        console.error(err);
+    }
+};
+get3Countries('portugal', 'canada', 'tanzania')
+    .then(ret => console.log(ret));
