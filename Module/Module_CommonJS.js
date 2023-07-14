@@ -23,4 +23,4 @@ class Class2 {
 // or
 module.exports = {Class1, Class2, publicly};
 
-// if we have just one module, we can do it => module.exports = Class1;
+// if we have just one module, we can do it => module.exports = Class1 or {publicly};

@@ -7,3 +7,9 @@ export class ClassES {
         console.log('methodE');
     }
 }
+
+let z = 55;
+let b = 38;
+
+// or
+export {z as a, b}; // we can change outputs name when we export
