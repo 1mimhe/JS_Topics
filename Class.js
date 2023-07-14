@@ -1,4 +1,4 @@
-
+// ES6
 // typeof a class => function
 class Shape {
     constructor(color, protoProperty = 5) {
