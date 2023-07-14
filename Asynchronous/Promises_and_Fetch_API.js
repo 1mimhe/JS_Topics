@@ -100,7 +100,8 @@ const lotteryPromise =
 
 // Consume Promises with Async_Await (ES6)
 // async function => this function will be running in background.
-// await => return value of the Promise
+// await => return value of the Promise.
+// JUST IN MODULE => we can use await, out of async function.
 
 const getInfCountry = async function (country) {
     try {
@@ -115,11 +116,12 @@ const getInfCountry = async function (country) {
         throw e; // rethrow error
     }
 }
-getInfCountry('usa').then(data => console.log(data))
-    .catch(e => console.log(e.message))
-    .finally(() => console.log('3'));
 // async/await implicitly returns a promise. (fulfilled as default)
 // if there's no return => Promise { undefined } is returned.
+
+getInfCountry('usa').then(data => console.log(data))
+    .catch(e => console.log(e.message))
+    .finally(() => console.log('3'));  
 
 // Running Promises in Parallel => Promise.all([array of promises])
 const get3Countries = async function (c1, c2, c3) {
