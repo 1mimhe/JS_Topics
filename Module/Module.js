@@ -25,3 +25,10 @@ x.methodE();
 console.log(a, c);
 
 console.log(EveryThing);
+
+// Dynamic imports
+/*
+import(modulePath)
+    .then(obj => <module object>)
+            .catch(err => <loading error, e.g. if no such module>)
+ */
