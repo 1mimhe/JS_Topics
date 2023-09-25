@@ -1,10 +1,11 @@
 // ES6
 // typeof a class => function
 class Shape {
-    constructor(color, protoProperty = 5) {
+    constructor(color, protoProperty = 5, privateProperty) {
         // Own Members (property + method)s
         this.color = color;
         this.protoProperty = protoProperty;
+        this.#privateProperty = privateProperty;
         this.ownMethod = function () {}
     }
     // Prototype members
@@ -12,6 +13,7 @@ class Shape {
         console.log('draw');
     }
     protoProperty;
+    #privateProperty; // private
 
     // Static members:
     // with static methods,
